@@ -1,0 +1,18 @@
+# ROS 2 / colcon
+build/
+install/
+log/
+
+# Editor / IDE
+.vscode/
+.idea/
+*.swp
+*.swo
+
+# Python cache (in case we add helper scripts)
+__pycache__/
+*.pyc
+
+# OS junk
+.DS_Store
+Thumbs.db
