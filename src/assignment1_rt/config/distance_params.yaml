@@ -1,0 +1,5 @@
+distance_monitor:
+  ros__parameters:
+    distance_threshold: 1.2
+    min_coord: 1.0
+    max_coord: 10.0
