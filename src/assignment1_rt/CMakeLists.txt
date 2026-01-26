@@ -11,6 +11,13 @@ find_package(geometry_msgs REQUIRED)
 find_package(std_msgs REQUIRED)
 find_package(turtlesim REQUIRED)
 
+#Additional part added for the message
+find_package(rosidl_default_generators REQUIRED)
+
+rosidl_generate_interfaces(${PROJECT_NAME}
+  "msg/VelocityStatus.msg"
+)
+
 include_directories(
   include
 )
