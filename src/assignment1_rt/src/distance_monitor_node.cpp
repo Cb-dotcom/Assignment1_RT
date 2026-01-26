@@ -1,4 +1,5 @@
 #include "assignment1_rt/distance_monitor_node.hpp"
+#include "assignment1_rt/msg/velocity_status.hpp"
 
 using std::placeholders::_1;
 
@@ -37,6 +38,12 @@ DistanceMonitorNode::DistanceMonitorNode()
     "/turtle1/cmd_vel", 10);
   pub_turtle2_cmd_safe_ = this->create_publisher<geometry_msgs::msg::Twist>(
     "/turtle2/cmd_vel", 10);
+
+  vel1_pub_ = this->create_publisher<assignment1_rt::msg::VelocityStatus>(
+    "/turtle1/velocity",10);
+  vel2_pub_ = this->create_publisher<assignment1_rt::msg::VelocityStatus>(
+    "/turtle2/velocity",10);
+
 
   timer_ = this->create_wall_timer(
     std::chrono::milliseconds(20), // Timer is at 50 Hz 
@@ -156,6 +163,19 @@ void DistanceMonitorNode::timerCallback()
     if (have_cmd2_raw_) cmd2_safe = last_cmd2_raw_;
     pub_turtle1_cmd_safe_->publish(cmd1_safe);
     pub_turtle2_cmd_safe_->publish(cmd2_safe);
+
+    // Publish velocity status at each iteration
+    assignment1_rt::msg::VelocityStatus v1;
+    v1.label = "velocity";
+    v1.linear_x = cmd1_safe.linear.x;
+    v1.angular_z = cmd1_safe.angular.z;
+    vel1_pub_->publish(v1);
+
+    assignment1_rt::msg::VelocityStatus v2;
+    v2.label = "velocity";
+    v2.linear_x = cmd2_safe.linear.x;
+    v2.angular_z = cmd2_safe.angular.z;
+    vel2_pub_->publish(v2);
     return;
   }
 
@@ -214,6 +234,20 @@ void DistanceMonitorNode::timerCallback()
   // Finally, publish the safe commands for turtlesim to execute.
   pub_turtle1_cmd_safe_->publish(cmd1_safe);
   pub_turtle2_cmd_safe_->publish(cmd2_safe);
+
+  // Publish velocity status at each iteration
+  assignment1_rt::msg::VelocityStatus v1;
+  v1.label = "velocity";
+  v1.linear_x = cmd1_safe.linear.x;
+  v1.angular_z = cmd1_safe.angular.z;
+  vel1_pub_->publish(v1);
+
+  assignment1_rt::msg::VelocityStatus v2;
+  v2.label = "velocity";
+  v2.linear_x = cmd2_safe.linear.x;
+  v2.angular_z = cmd2_safe.angular.z;
+  vel2_pub_->publish(v2);
+
 }
 
 int main(int argc, char ** argv)

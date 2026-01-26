@@ -10,6 +10,8 @@
 #include "std_msgs/msg/float32.hpp"
 #include "turtlesim/msg/pose.hpp"
 
+#include "assignment1_rt/msg/velocity_status.hpp"
+
 // This node acts as safety check between teleop (/cmd_vel_raw) and turtlesim (/cmd_vel)
 class DistanceMonitorNode : public rclcpp::Node
 {
@@ -29,6 +31,9 @@ private:
   rclcpp::Publisher<std_msgs::msg::Float32>::SharedPtr distance_pub_;
   rclcpp::Publisher<geometry_msgs::msg::Twist>::SharedPtr pub_turtle1_cmd_safe_;
   rclcpp::Publisher<geometry_msgs::msg::Twist>::SharedPtr pub_turtle2_cmd_safe_;
+
+  rclcpp::Publisher<assignment1_rt::msg::VelocityStatus>::SharedPtr vel1_pub_;
+  rclcpp::Publisher<assignment1_rt::msg::VelocityStatus>::SharedPtr vel2_pub_;
 
   rclcpp::TimerBase::SharedPtr timer_;
 

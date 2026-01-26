@@ -37,6 +37,8 @@ ament_target_dependencies(distance_monitor_node
   turtlesim
 )
 
+rosidl_target_interfaces(distance_monitor_node ${PROJECT_NAME} "rosidl_typesupport_cpp")
+
 ament_target_dependencies(turtle_ui_node
   rclcpp
   geometry_msgs
@@ -57,5 +59,7 @@ install(
   DIRECTORY launch config
   DESTINATION share/${PROJECT_NAME}
 )
+
+ament_export_dependencies(rosidl_default_runtime)
 
 ament_package()
